@@ -5,7 +5,7 @@ def home(request):
     return render(request, "home.html")
 
 def capitulos(request):
-    return render(request, "Tablas/Capitulos")
+    return render(request, "Tablas/Capitulos.html")
 
 def ctas_madres(request):
     return render(request, "Tablas/Ctas_Madres.html")
