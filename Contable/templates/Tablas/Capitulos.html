@@ -1,8 +1,146 @@
 
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
+<!--   Navbar content (icon+ title)-->
+{% block nav-content %} 
+
+<i class="fas fa-grip-horizontal"></i>&nbsp;&nbsp; CAPITULOS
+
+{% endblock nav-content %}
+
+    <!-- Button to navbar-->
+    {% block btn-nav %}
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm border-light text-light" id="btn-nav">Logout</a> 
+    {% endblock btn-nav %}
+
+<!-- Page Content-->
 {% block contenido %}
-    <body>
-        <h1>CAPITULOS</h1>
-    </body>
-{% endblock %}
+
+    <div class="container">
+        <br><br>
+
+        <!-- Add button and get username -->
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'alta_capitulo' %}" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus"></i>&nbsp;&nbsp; Alta Capitulo</a>
+            <span>
+                Bienvenido: <strong><span class="text-primary">{{user.get_username}}  </span></strong>
+            </span>
+        </div>
+
+        <!-- Input Search + Button Search + Button reset-->
+        <form >
+            <div class="input-group intput-group-sm mb-3 mt-4">
+                <input name="q"  type="text" class="form-control" placeholder="Search for...." value="{{ request.GET.q}}">
+                <button class="btn btn-secundary"><i class="fas fa-search"> </i></button>
+                <a href="{% url 'backend' %}" class="btn btn-dark" style="margin-left: 3px;"><i class="fas fa-sync-alt"></i></a>
+            </div>
+        </form>
+
+        <!-- Table -->
+        <center>
+            <table class="table table-bordered table-sm mt-4" style="text-align: center ; font-size: 14px;">
+                <thead class="table-primary">
+                    <tr>
+                        <th style="width: 20%;">Codigo</th>
+                        <th style="width: 70%;">Descripcion</th>
+                        <th style="width: 10%;" colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <!-- Data from backend -->
+                {% for capitulos in entity  %}
+                <tr id="chk_td">
+                    <td>{{ capitulos.IdCapitulo}}</td>
+                    <td>{{ capitulos.Denominacion}}</td>
+                    <td>
+                        <a class="btn btn-primary"  href="/Tablas/{{ capitulos.IdCapitulo}}" title="Editar capitulo">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-secundary"   title="Borrar Capitulo" data-bs-toggle="modal" data-bs-target="#deleteModal{{ capitulos.pk}}">
+                            <i class ="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+
+
+                </tr>
+                <!-- Modal (delete confirmation) -->
+                <div class="modal fade" id="deleteModal{{ capitulos.pk}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash-alt" ></i> &nbsp;&nbsp Borrar Capitulo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                    <div class="modal-body">
+                                        <div class="text-center text-danger"><i class="far fa-times-circle fa-x mb-4 mt-2"></i></div>
+                                        <div class="text-center text-danger">
+                                            <span>DESEA BORRAR ESTE CAPITULO ???</span>
+                                            <div class="text-dark mt-3 mb-2">capitulos:<strong>{{capitulos.Denominacion}}</strong></div>
+                                        </div>
+                                    </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                <a href="/delete_Capitulo/{{ capitulos.IdCapitulo }}" type="button" class="btn btn-primary btn-sm">Borrar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </table>
+        </center>
+
+
+        
+        
+  
+
+
+
+        <!-- PAGINATION -->
+
+        <nav class="mt-4">
+            {% if patients.has_other_pages  %}
+            <ul class="pagination justify-content-center">
+
+                {% if patients.has_previous %}
+                <a href="?page=1" class="btn btn-outline-primary mb-4" style="width: 60px; border-radius:1px; border: 1px solid #d3d3d3;">First</a>
+                <li class="page-item"><a class="page-link"  href="?page={{ patients.previous_page_number }}"><i class="fas fa-angle-double-left"></i></a></li>
+                {% else %}
+                <li class="page-item-disabled"></li>
+                {% endif %}
+                
+                {% for i in patients.paginator.page_range  %}
+                    {% if patients.number == 1 %}
+                    <li class="page-item-active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link"  href="?page={{ i }}"> {{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if patients.has_next %}
+                <li class="page-item"><a class="page-link"  href="?page={{ patients_next_page_number}}"><i class="fas fa-angle-double-right"></i></a></li>
+                <a href="?page={{ patients.paginator.num_pages }}" class="btn btn-outline-primary mb-4" style="width: 60px; border-radius: 1px; border: 1px solid #d3d3d3; border-left: none">Last</a>
+                {% else %}                
+                <li class=""page-item disabled"></li>
+                {% endif %}
+            
+            {% endif %}
+            </ul>
+        </nav>
+
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>
+                    var m = "{{ message }}";
+                    swal("Perfect !",m,"success !! ")
+                </script>
+                
+            {% endif %}
+        {% endfor %}
+
+</div> <!--END // container-->
+<!-- if no patient, show this span (message)-->
+<span class="text-danger" id="no-data"></span>
+{% endblock contenido %}

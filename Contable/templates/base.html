@@ -19,7 +19,10 @@
 
 </head>
 
-<body>
+<body >
+    <style>
+        body { background-color: #b6c7ee; }
+      </style>
     <div class="wrapper">
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,7 +35,7 @@
               </div>
 
               <div class="col-sm">
-                    <a href="{% url 'home' %}" class="btn btn-outline-info btn-sm border-light" id="btn-nav">Login</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-info btn-sm border-light" id="btn-nav">Login</a>
               </div>
             </nav>
         </header>
@@ -65,21 +68,26 @@
   
 
         <!-- ===== block content (ROOT) =====-->
-        {% block content %} {% endblock content %}
+        {% block contenido %} {% endblock contenido %}
 
     </div> <!-- END // wrapper-->
    
     
-    <!-- Footer -->
-    <footer class="bg-dark text-center text-lg-start text-light" id="footer">
-        <div class="text-center p-3" style="background-color: rgba(0,0,0.2);">
-            Copyright &copy; {% now "Y" %} <span>All Rights reserved</span> | GFlow
-            <i class="text-danger fas fa-chart-line blink_me" style="font-size: 15px;"></i> by 
-            <a href="#" target = "_blank" style="color:aqua; text-decoration: none;">Cesar Gustavo Flores </a>          
-            
-        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-center text-lg-start text-light" id="footer">
+            <div class="text-center p-3" style="background-color: rgba(0,0,0.2);">
+                Copyright &copy; {% now "Y" %} <span>All Rights reserved</span> | GFlow
+                <i class="text-danger fas fa-chart-line blink_me" style="font-size: 15px;"></i> by 
+                <a href="#" target = "_blank" style="color:aqua; text-decoration: none;">Cesar Gustavo Flores </a>          
+                
+            </div>
+        
+        </footer>
     
-    </footer>
+
+
+
 
 
     <!-- Bootsrap 5 JS  -->

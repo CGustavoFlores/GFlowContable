@@ -1,15 +1,7 @@
 {% extends 'base.html' %}
 
 <!-- page content -->
-{% block content %}
-<header class="badge badge-primary text-wrap" style="width: 6rem;">
-    Bienvenido, {{ user.username }} 
-    <div>
-        <img src="{{url}}" alt="">
-    </div>
-</header>
-
-
+{% block contenido %}
 <style>
     body {
         background: url("/static/img/portada.jpg");
@@ -20,5 +12,7 @@
     }
 </style> 
 
-{% endblock content %}
 
+
+
+{% endblock contenido %}

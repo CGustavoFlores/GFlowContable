@@ -1,24 +1,27 @@
 /* ---------------------------------------
  # start configuration
 -----------------------------------------*/
-html,
-body {
+html, body {
     height: 100%;
     margin: 0;
     max-width: 100%;
     overflow: hidden;
 }
 
+
+
 /* ---------------------------------------
  # NAVBAR
 -----------------------------------------*/
 
 #btn-nav {
-    width: 90px;
+    width: 25px;
     float: right;
     margin-right: 25px;
 }
 
+
+/* Keep the footer always down */
 
 /* ---------------------------------------
  # FOOTER
@@ -28,13 +31,12 @@ body {
     min-height: 100%;
     margin-bottom: -50px;
 }
-
-
-#footer,
-.push {
+#footer, .push {
     height: 50px;
-    font-size: 13px;
 }
+
+
+
 
 /* ---------------------------------------
  # LOGIN    
@@ -65,5 +67,6 @@ body {
     transform: translate(-50%, -50%);
     font-size: 22px;
 }
+
 
 

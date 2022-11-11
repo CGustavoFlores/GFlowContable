@@ -8,6 +8,9 @@ class ContaCapitulos(models.Model):
     IdCapitulo = models.CharField(max_length=1, primary_key=True)
     Denominacion = models.CharField(max_length=30 )
     
+    def __str__(self):
+        return self.Denominacion
+
     class Meta:
         db_table = 'ContaCapitulo'
 
